@@ -105,7 +105,7 @@ function Header() {
            </div>
                   </>) : (<>
                      <Link to="/login">Login</Link>
-                     <Link to="/register">SignUp</Link>
+                     <Link to="/sign">SignUp</Link>
                   </>)}  
                      <Link to="/cart"> <i className="fa-solid fa-cart-shopping"></i>
                   <div className='absolute bottom-6 left-4 text-white bg-blue-950 text-center rounded-full h-6 w-6 text-[15px]'>
