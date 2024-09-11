@@ -29,7 +29,7 @@ export const EcomProvider = ({ children }) => {
   // })
   const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/product");
+        const response = await fetch("https://ecommerce-api-ajas.onrender.com/api/product");
         const data = await response.json();
         setProduct(data);
       } catch (error) {
@@ -44,7 +44,7 @@ export const EcomProvider = ({ children }) => {
     // if Authenticated
        if (isAuthenticated) {
         try {
-          const res = await fetch("http://localhost:3000/api/addcart", {
+          const res = await fetch("https://ecommerce-api-ajas.onrender.com/api/addcart", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -94,7 +94,7 @@ export const EcomProvider = ({ children }) => {
        const fetchCart = async () => {
             if (isAuthenticated) {
               // authenticated
-              const res = await fetch("http://localhost:3000/api/cart", {
+              const res = await fetch("https://ecommerce-api-ajas.onrender.com/api/cart", {
                 method: "GET",
                 headers: {
                      "Content-Type": "application/json",
@@ -164,7 +164,7 @@ export const EcomProvider = ({ children }) => {
         if (isAuthenticated) {
           try {
             // authenticated
-              const res = await fetch("http://localhost:3000/api/delete-cart", {
+              const res = await fetch("https://ecommerce-api-ajas.onrender.com/api/delete-cart", {
                 method: "DELETE",
                 headers: {
                      "Content-Type": "application/json",
@@ -211,7 +211,7 @@ export const EcomProvider = ({ children }) => {
     const updateCartItems = async (productId, quantity) => {
       if (isAuthenticated) {
         try {
-          const res = await fetch("http://localhost:3000/api/update-cart", {
+          const res = await fetch("https://ecommerce-api-ajas.onrender.com/api/update-cart", {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
@@ -274,7 +274,7 @@ export const EcomProvider = ({ children }) => {
 
     const createOrder = async (transaction_id, orderId) => {
         try {
-          const res = await fetch("http://localhost:3000/api/payment/verify", {
+          const res = await fetch("https://ecommerce-api-ajas.onrender.com/api/payment/verify", {
             method: "POST",
             headers: {
                  "Content-Type": "application/json",
