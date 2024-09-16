@@ -38,7 +38,7 @@ function ProductCart() {
                                     <td>${item.product?.price}</td>
                                     <td>${item.amount}</td>
                                     <td>
-                                        <input type="number" onChange={(e) => updateCartItems(item.product._id, e.target.value)} min={1} value={item.quantity} id="" className='w-[3.3rem] pl-[10px]  py-2 appearance-none bg-transparent outline-none'/>
+                                        <input type="number" onChange={(e) => updateCartItems(item.product._id, e.target.value)} min={1} value={item.quantity} id="" className='w-[3.3rem] pl-[10px]  py-2 appearance-none bg-transparent outline-none quan'/>
                                     </td>
                                     <td>
                                         <button type="submit" onClick={() => removeCartItems(item.product._id)}><i className="fa-solid fa-trash"></i></button>

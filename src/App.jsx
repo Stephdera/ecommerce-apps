@@ -21,7 +21,9 @@ import useLocalStorage from './hooks/useLocalStorage';
 import { AuthProvider } from './context/AuthContext';
 import ThankYou from './components/pages/ThankYou';
 import AdminHeader from './components/pages/admin/AdminHeader';
-import AdminSidebar from './components/pages/admin/AdminSidebar';
+import AdminProduct from './components/pages/admin/AdminProduct';
+import Users from './components/pages/admin/Users';
+import Category from './components/pages/admin/Category';
 
 function App() {
   const { getItem } = useLocalStorage("auth-token");
@@ -88,7 +90,9 @@ function App() {
                   <ThankYou/>
                   <Footer/> </>}/>
                 <Route path="/admin" element={<AdminHeader/>}/>
-                <Route path="/sidebar" element={<AdminSidebar/>}/>
+                <Route path="/admin-product" element={<AdminProduct/>}/>
+                <Route path="/users" element={<Users/>}/>
+                <Route path="/category" element={<Category/>}/>
               </Routes>
             {/* <Footer/> */}
             </Router>

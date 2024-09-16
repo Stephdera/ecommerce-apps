@@ -10,7 +10,7 @@ function Header() {
    const { deleteItem } = useLocalStorage("auth-token");
    const [ state, dispatch ] = useContext(AuthContext);
    const redirect = useNavigate();
-   const { isAuthenticated, showHide, cartItems } = useContext(EcomContext);
+   const { isAuthenticated, showHide, cartItems} = useContext(EcomContext);
 
 
    const logout = (e) => {
@@ -37,15 +37,15 @@ function Header() {
                   {/* <Link onClick={logout}>Logout</Link> */}
                {/* mine */}
                <div className='dropDown'>
-                  <button class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 
-                    text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i class="fa-solid fa-user"></i> <p className='ml-2'>Hi, Stephanie</p> <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" 
+                  <button className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 
+                    text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i class="fa-solid fa-user"></i> <p className='ml-2'>Hi, Stephanie</p> <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" 
                      xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                    </svg></button>
                   <ul className='contents text-sm py-2 px-4'>
-                     <li className="px-6 py-2"><i class="fa-solid fa-user mr-2"></i> account</li>
+                     <li className="px-6 py-2"><i className="fa-solid fa-user mr-2"></i> account</li>
                      <li className="px-6 py-2">order</li>
-                     <li className="px-6 py-2"><i class="fa-solid fa-envelope mr-2"></i>inbox</li>
+                     <li className="px-6 py-2"><i className="fa-solid fa-envelope mr-2"></i>inbox</li>
                      <li className="px-6 py-2"><Link onClick={logout}>Log Out</Link></li>
                   </ul>
                </div>
@@ -81,25 +81,25 @@ function Header() {
                   {isAuthenticated ? (<>
                      <Link onClick={logout}>Logout</Link>
                      {/* expriment */}
-               <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button"><i class="fa-solid fa-user"></i> <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+               <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button"><i className="fa-solid fa-user"></i> <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                 </svg>
                 </button>
 
                {/* <!-- Dropdown menu --> */}
-               <div id="dropdownHover" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-               <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHoverButton">
+               <div id="dropdownHover" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+               <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHoverButton">
                  <li>
-                   <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                   <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
                  </li>
                  <li>
-                   <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+                   <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
                  </li>
                  <li>
-                   <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
+                   <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
                  </li>
                  <li>
-                   <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
+                   <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
                  </li>
                </ul>
            </div>

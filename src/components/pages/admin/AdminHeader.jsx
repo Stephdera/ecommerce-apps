@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { Link } from 'react-router-dom';
+import EcomContext from '../../../context/EcomContext';
 
 function AdminHeader() {
+  const { product, users, category } = useContext(EcomContext);
   return (
     <>
       <div className='grid-container'>
@@ -37,23 +40,23 @@ function AdminHeader() {
                 </a>
               </li>
               <li>
-                <a href="">
+                <Link to="/admin-product">
                 <i className="fa-solid fa-box-archive"></i> Products
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="">
+                <Link to="/users">
                 <i className="fa-solid fa-users"></i>Customers
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="">
+                <Link to="/category">
                 <i className="fa-solid fa-list"></i> Categories
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="">
-                <i className="fa-solid fa-clipboard"></i> Reports
+                <i className="fa-solid fa-truck"></i> Orders
                 </a>
               </li>
               <li>
@@ -78,7 +81,7 @@ function AdminHeader() {
                   <h3>PRODUCTS</h3>
                   <i className="fa-solid fa-box-archive"></i>
                 </div>
-                <h1>300</h1>
+                <h1>{product?.length}</h1>
               </div>
 
               <div className="card space-y-20">
@@ -86,7 +89,7 @@ function AdminHeader() {
                   <h3>CATEGORIES</h3>
                   <i className="fa-solid fa-list"></i>
                 </div>
-                <h1>10</h1>
+                <h1>{category?.length}</h1>
               </div>
 
               <div className="card space-y-20">
@@ -94,13 +97,13 @@ function AdminHeader() {
                   <h3>CUSTOMERS</h3>
                   <i className="fa-solid fa-users"></i>
                 </div>
-                <h1>150</h1>
+                <h1>{users?.length}</h1>
               </div>
 
               <div className="card space-y-20">
                 <div className="card-inner">
-                  <h3>ALERT</h3>
-                  <i className="fa-solid fa-bell"></i>
+                  <h3>ORDERS</h3>
+                  <i className="fa-solid fa-truck"></i>
                 </div>
                 <h1>100</h1>
               </div>

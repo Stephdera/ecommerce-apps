@@ -15,11 +15,16 @@ export const EcomProvider = ({ children }) => {
   const [ state, dispatch] = useContext(AuthContext);
   const isAuthenticated = state.accessToken !== null;
   const { setItem, getItem } = useLocalStorage();
+  // const [ user, setUser ] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [category, setCategory] = useState([]);
+  
 
   useEffect(() => {
     fetchData()
-    // fetchCart()
     fetchCart()
+    fetchUsers()
+    fetchCategories()
   }, [])
 
  
@@ -29,7 +34,8 @@ export const EcomProvider = ({ children }) => {
   // })
   const fetchData = async () => {
       try {
-        const response = await fetch("https://ecommerce-api-ajas.onrender.com/api/product");
+        // const response = await fetch("https://ecommerce-api-ajas.onrender.com/api/product/");
+        const response = await fetch("http://localhost:3000/api/product");
         const data = await response.json();
         setProduct(data);
       } catch (error) {
@@ -38,13 +44,38 @@ export const EcomProvider = ({ children }) => {
   }
   const featuredProduct = product.filter((product) => product.featured === true)
   const topSellingProduct = product.filter((product) => product.topSelling === true)
+  
+    // to delete a product
+   const deleteProduct = async ( id ) => {
+       if (window.confirm("Are you sure you want to delete this product?....!")) {
+        try {
+              const res = await fetch("http://localhost:3000/api/delete-product", {
+              method: "DELETE",
+              headers: {
+                 "Content-Type": "application/json",
+                 "auth-token": `${localStorage.getItem("auth-token")}` || ''
+              },
+              body: JSON.stringify({ id })
+            });
+            const data = await res.json();
+            if (res.ok ) {
+                setProduct(product);
+                showHide("Success", "Product deleted successfully");
+              }
+        } catch (error) {
+          console.log(error);
+        }
+       }
+   }
+
 
    //   adding items to cart
    const addToCart = async (productId, quantity, product) => {
     // if Authenticated
        if (isAuthenticated) {
         try {
-          const res = await fetch("https://ecommerce-api-ajas.onrender.com/api/addcart", {
+          // const res = await fetch("https://ecommerce-api-ajas.onrender.com/api/addcart", {
+            const res = await fetch("http://localhost:3000/api/addcart", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -94,7 +125,8 @@ export const EcomProvider = ({ children }) => {
        const fetchCart = async () => {
             if (isAuthenticated) {
               // authenticated
-              const res = await fetch("https://ecommerce-api-ajas.onrender.com/api/cart", {
+              // const res = await fetch("https://ecommerce-api-ajas.onrender.com/api/cart", {
+                const res = await fetch("http://localhost:3000/api/cart", {
                 method: "GET",
                 headers: {
                      "Content-Type": "application/json",
@@ -111,7 +143,7 @@ export const EcomProvider = ({ children }) => {
             } else {
               // unauthenticated
               const localCart = getItem("cart");
-              console.log(localCart);
+              // console.log(localCart);
               if (localCart) {
                 setCartItems(JSON.parse(localCart));
               } else {
@@ -164,7 +196,8 @@ export const EcomProvider = ({ children }) => {
         if (isAuthenticated) {
           try {
             // authenticated
-              const res = await fetch("https://ecommerce-api-ajas.onrender.com/api/delete-cart", {
+              // const res = await fetch("https://ecommerce-api-ajas.onrender.com/api/delete-cart", {
+                const res = await fetch("http://localhost:3000/api/delete-cart", {
                 method: "DELETE",
                 headers: {
                      "Content-Type": "application/json",
@@ -206,12 +239,12 @@ export const EcomProvider = ({ children }) => {
     };
 
     
-
     // update cart items
     const updateCartItems = async (productId, quantity) => {
       if (isAuthenticated) {
         try {
-          const res = await fetch("https://ecommerce-api-ajas.onrender.com/api/update-cart", {
+          // const res = await fetch("https://ecommerce-api-ajas.onrender.com/api/update-cart", {
+            const res = await fetch("http://localhost:3000/api/update-cart", {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
@@ -274,7 +307,8 @@ export const EcomProvider = ({ children }) => {
 
     const createOrder = async (transaction_id, orderId) => {
         try {
-          const res = await fetch("https://ecommerce-api-ajas.onrender.com/api/payment/verify", {
+          // const res = await fetch("https://ecommerce-api-ajas.onrender.com/api/payment/verify", {
+            const res = await fetch("http://localhost:3000/api/payment/verify", {
             method: "POST",
             headers: {
                  "Content-Type": "application/json",
@@ -296,6 +330,31 @@ export const EcomProvider = ({ children }) => {
     }
     
 
+
+    // to get all users
+    const fetchUsers = async () => {
+      try {
+         const response = await fetch("http://localhost:3000/api/all-users");
+         const data = await response.json();
+         setUsers(data);
+      } catch (error) {
+        console.log(error);
+      }
+     }
+      
+    //  to get all categories
+    const fetchCategories = async () => {
+       try {
+         const response = await fetch("http://localhost:3000/api/category");
+         const data = await response.json();
+         setCategory(data);
+       } catch (error) {
+        console.log(error)
+       }
+    }
+     
+    
+
   return (
     <EcomContext.Provider value= {{
         product,
@@ -304,6 +363,9 @@ export const EcomProvider = ({ children }) => {
         featuredProduct,
         topSellingProduct,
         isAuthenticated,
+        category,
+        users,
+        order,
         showHide,
         addToCart,
         calculateSubTotal,
@@ -312,9 +374,9 @@ export const EcomProvider = ({ children }) => {
         removeCartItems,
         updateCartItems,
         createOrder,
-        order,
         fetchCart,
-        setCartItems
+        setCartItems,
+        deleteProduct,
     }}>
            {children}
     </EcomContext.Provider>
