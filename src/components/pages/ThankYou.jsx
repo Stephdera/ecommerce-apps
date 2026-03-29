@@ -32,7 +32,7 @@ function ThankYou() {
             <h1>Thank you, {order?.firstName} {order?.lastName}</h1>
          </div>
           <div className='space-y-2'>
-              <p>Thank you {order?.firstName} for shopping on Star Stores. Your order #12345678 has been confirmed successfully.</p>
+              <p>Thank you {order?.firstName} for shopping on Star Stores. Your order #{order?.transactionId} has been confirmed successfully.</p>
               <p>Your package will be packed and shipped within 7 days of your purchase. You will receive a notification from us once the item(s) are ready for delivery.</p>
           </div>
           <button className=''>

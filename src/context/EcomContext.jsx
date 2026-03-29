@@ -15,7 +15,7 @@ export const EcomProvider = ({ children }) => {
   const [ state, dispatch] = useContext(AuthContext);
   const isAuthenticated = state.accessToken !== null;
   const { setItem, getItem } = useLocalStorage();
-  // const [ user, setUser ] = useState([]);
+  const [ user, setUser ] = useState([]);
   const [users, setUsers] = useState([]);
   const [category, setCategory] = useState([]);
   
@@ -25,6 +25,7 @@ export const EcomProvider = ({ children }) => {
     fetchCart()
     fetchUsers()
     fetchCategories()
+    fetchUser()
   }, [])
 
  
@@ -173,21 +174,22 @@ export const EcomProvider = ({ children }) => {
   //  }
 
     //    calculate subtotal
-     const calculateSubTotal = () => {
+     
+    const calculateSubTotal = () => {
         return cartItems.products?.reduce((acc, curr) => acc + curr.amount , 0)
      }
 
     //  calculate Vat
     const calculateVat = ( vat = 0.075) => {
-        const subtotal = calculateSubTotal()
-        return subtotal * vat;
+      const subtotal = calculateSubTotal()
+      return subtotal * vat;
     }
 
     // calculate total amount
     const calculateTotalAmount = () => {
-        const subtotal = calculateSubTotal()
-        const vat = calculateVat()
-        return subtotal + vat;
+      const subtotal = calculateSubTotal()
+      const vat = calculateVat()
+      return subtotal + vat;
     }
 
     // remove cart items
@@ -353,6 +355,29 @@ export const EcomProvider = ({ children }) => {
        }
     }
      
+  // to get one authenticated user
+  const fetchUser = async () => {
+     
+    try {
+        
+      const response = await fetch("http://localhost:3000/api/user", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "auth-token": `${localStorage.getItem("auth-token")}`
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const userdata = await response.json();
+      setUser(userdata);
+      console.log(userdata);    
+    } catch (error) {
+      console.log(error)
+    }
+  }  
     
 
   return (
@@ -366,6 +391,7 @@ export const EcomProvider = ({ children }) => {
         category,
         users,
         order,
+        user,
         showHide,
         addToCart,
         calculateSubTotal,
@@ -377,6 +403,7 @@ export const EcomProvider = ({ children }) => {
         fetchCart,
         setCartItems,
         deleteProduct,
+        setUser,
     }}>
            {children}
     </EcomContext.Provider>

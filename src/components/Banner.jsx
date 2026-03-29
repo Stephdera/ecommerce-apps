@@ -1,17 +1,17 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
-function Banner() {
+function Banner({imageUrl, title, title1, showButton}) {
   return (
     <>
        <div>
            <div className="steph z-[0]">
-              {/* <img src="/img/airmax.jpg" alt=""/> */}
-              <img src="/img/handbag green.jpg" alt=""/>
+              <img src={imageUrl} alt="" />
               <div className="like"></div>
               <div className="steph-container font-bold text-4xl uppercase text-[#fff]">
-                  <h2 className='text-blue-700 italic'>Welcome to STAR Stores</h2>
-                  <h2 className='text-blue-700 italic'>Luxury meets Perfection</h2>
+                  <h2 className='text-blue-700 italic'>{title}</h2>
+                  <h2 className='text-blue-700 italic'>{title1}</h2>
+                  {showButton && (<>
                   <Link to="/product" className="">
                   <button className="cta"><span className="hover-underline-animation italic"> Our Products </span>
                  <svg
@@ -27,8 +27,8 @@ function Banner() {
                    d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z"
                    transform="translate(30)"></path>
                </svg>
-             </button>
-                </Link>
+               </button>
+                </Link></>)}
               </div>
            </div>
        </div>

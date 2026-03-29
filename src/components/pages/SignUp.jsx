@@ -14,6 +14,7 @@ function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [role, setRole] = useState("client");
   const { setItem }= useLocalStorage("auth-token");
+  const [loading, setLoading] = useState(false);
   const { showHide, isAuthenticated } = useContext(EcomContext);
   const [state, dispatch] = useContext(AuthContext);
   const redirect = useNavigate();
@@ -27,8 +28,16 @@ function SignUp() {
     e.preventDefault();
     console.log("submitted")
 
+    if (!email || !password || !firstName || !lastName || !phone || !confirmPassword) {
+      showHide("error", "All fields are required")
+      return;
+    } 
+    
+    setLoading(true);
+
     try{
-      const res = await fetch("https://ecommerce-api-ajas.onrender.com/api/register", {
+      // const res = await fetch("https://ecommerce-api-ajas.onrender.com/api/register", {
+      const res = await fetch("http://localhost:3000/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,20 +55,23 @@ function SignUp() {
       const data = await res.json();
       if (data.message) {
         showHide("error", data.message);
+        setLoading(false);
       }else if (data === "User already exists!...") {
         showHide("error", "User already exists!...");
+        setLoading(false);
       }else if(data === "Password doesn't match") {
         showHide("error", "Password doesn't match");
+        setLoading(false);
       }else {
-        // dispatch({ type: "setToken", payload: data.token });
-        // setItem(data.token)
-        redirect("/login");
         showHide("success", "You have successfully Registered");
+        redirect("/login");
+        setLoading(false);
       }
     }catch (error) {
       console.log(error);
     }
   }
+
   return (
     <>
        <div className='mx-auto max-w-md bg-white display m-6 p-2 rounded bg-[#fff] signup'>
@@ -93,7 +105,7 @@ function SignUp() {
                 <input type="password" name="" id="confirmPassword" placeholder='Confirm Password' onChange={(e) => setConfirmPassword(e.target.value)} />
               </div>
               <div className='text-center'>
-                 <button className={"text-center text-white font-bold  bg-[#502274]  text-l hover:bg-gray-500 hover:text-black"} type="submit">Create an Account</button>
+                 <button className={"text-center text-white font-bold  bg-[#502274]  text-l hover:bg-gray-500 hover:text-black"} type="submit" disabled={loading}>{loading ? "Creating" : "Create an Account"}</button>
                  <p>By signing up you accept our terms and conditions
                  & privacy policy</p>
               </div>

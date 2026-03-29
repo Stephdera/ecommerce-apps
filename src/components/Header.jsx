@@ -10,16 +10,20 @@ function Header() {
    const { deleteItem } = useLocalStorage("auth-token");
    const [ state, dispatch ] = useContext(AuthContext);
    const redirect = useNavigate();
-   const { isAuthenticated, showHide, cartItems} = useContext(EcomContext);
+   const { isAuthenticated, showHide, cartItems, user, setUser} = useContext(EcomContext);
 
 
    const logout = (e) => {
       e.preventDefault();
-      dispatch({ type: "setToken", payload: null})
+   
       deleteItem("auth-token");
+      setUser(null);
+      dispatch({ type: "setToken", payload: null});
+      showHide("success", "You are now logged out!...");
       redirect("/login");
-      showHide("success", "You are now logged out!...")
    }
+
+   
   return (
       <> 
          <div className='bg-black text-[#fff] sticky top-0 z-[20] flex justify-between items-center py-[10px] px-[50px] header'>      
@@ -38,15 +42,15 @@ function Header() {
                {/* mine */}
                <div className='dropDown'>
                   <button className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 
-                    text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i class="fa-solid fa-user"></i> <p className='ml-2'>Hi, Stephanie</p> <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" 
+                    text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i class="fa-solid fa-user"></i> <p className='ml-2'>Hi, {user?.firstName}</p> <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" 
                      xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                    </svg></button>
-                  <ul className='contents text-sm py-2 px-4'>
-                     <li className="px-6 py-2"><i className="fa-solid fa-user mr-2"></i> account</li>
-                     <li className="px-6 py-2">order</li>
-                     <li className="px-6 py-2"><i className="fa-solid fa-envelope mr-2"></i>inbox</li>
-                     <li className="px-6 py-2"><Link onClick={logout}>Log Out</Link></li>
+                  <ul className='contents text-sm py-2 px- mt-2'>
+                     <li className="px py-2"><i className="fa-solid fa-user mr-4"></i> account</li>
+                     <li className="px- py-2"><i className="fa-solid fa-bars mr-4"></i>order</li>
+                     <li className="px- py-2"><i className="fa-solid fa-envelope mr-4"></i>inbox</li>
+                     <li className="px- py-2"><Link onClick={logout}><i className="fa-solid fa-arrow-right-from-bracket mr-4"></i>Log Out</Link></li>
                   </ul>
                </div>
                {/* mine done */}
@@ -102,7 +106,7 @@ function Header() {
                    <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
                  </li>
                </ul>
-           </div>
+               </div>
                   </>) : (<>
                      <Link to="/login">Login</Link>
                      <Link to="/sign">SignUp</Link>

@@ -12,9 +12,10 @@ function Login() {
     const[ShowPassword, setShowPassword] = useState(false);
     const [email, setEmail] = useState("");
     const [Password, setpassWord] = useState("");
-    const { showHide, isAuthenticated,setCartItems, fetchCart } = useContext(EcomContext);
-      const { setItem, getItem, deleteItem } = useLocalStorage("auth-token");
+    const { showHide, isAuthenticated, setCartItems, fetchCart } = useContext(EcomContext);
+    const { setItem, getItem, deleteItem } = useLocalStorage("auth-token");
     const [state, dispatch ] = useContext(AuthContext);
+    const [loading, setLoading] = useState(false);
     const redirect = useNavigate();
 
     const validatePassword = (e) => {
@@ -32,14 +33,6 @@ function Login() {
         e.preventDefault();
     }
 
-     if (isAuthenticated) {
-        return <Navigate to="/"/>
-     }
-     
-
-//      const { showHide, isAuthenticated,setCartItems, fetchCart } = useContext(EcomContext);
-//   const { setItem, getItem, deleteItem } = useLocalStorage("auth-token");
-
 // client02@gmail.com
 // qwerty456
 
@@ -50,9 +43,12 @@ function Login() {
   const loginHandler = async (e) => {
     e.preventDefault();
     if (!email || !password) {
-      showHide("error", "Email and Passowrd is required")
+      showHide("error", "Email and Password is required")
       return;
     } 
+
+    setLoading(true);
+
     try {
       // const res = await fetch("https://ecommerce-api-ajas.onrender.com/api/login", {
         const res = await fetch("http://localhost:3000/api/login", {
@@ -65,6 +61,7 @@ function Login() {
       const data = await res.json();
       if (data.message) {
         showHide("error", data.message);
+        setLoading(false);
       }else {
         dispatch({ type: "setToken", payload: data.token });
         setItem(data.token);
@@ -88,6 +85,7 @@ function Login() {
               fetchCart();
               showHide("success", "added to cart successfully")
             } else {
+              showHide("error","Failed to add to cart")
               console.error("Failed to add items to the backend cart");
             }
           }));
@@ -96,11 +94,13 @@ function Login() {
 
         redirect("/");
         showHide("success", "you are now logged in");
+        setLoading(false);
       }
     } catch (error) {
       console.log(error);
     }
   };
+  
     // const loginHandler = async (e) => {
     //     e.preventDefault();
     //     if (!email || !Password) {
@@ -155,7 +155,7 @@ function Login() {
                     
                     <div className='flex'>
                     {/* <button type="submit" className="bg-[#000] text-center capitalize p-3 rounded-xl text-[lime] hover:bg-zinc-500 hover:text-black" >Login</button> */}
-                    <button disabled={btnDisabled} type="submit" className="bg-[#000] text-center capitalize p-3 rounded-xl text-[lime] hover:bg-zinc-500 hover:text-black" >Login</button>
+                    <button disabled={btnDisabled || loading} type="submit" className="bg-[#000] text-center capitalize p-3 rounded-xl text-[lime] hover:bg-zinc-500 hover:text-black">{loading ? "Logging In..." : "Login"}</button>
                     <h5 className='text-green-400 ml-36 mt-2'>Forgot Password ?</h5>
                     </div>
                 </form>

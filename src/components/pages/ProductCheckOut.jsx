@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import EcomContext from '../../context/EcomContext';
-import { Link, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 function ProductCheckOut() {
     const { cartItems, calculateTotalAmount, isAuthenticated } = useContext(EcomContext);
@@ -70,7 +70,7 @@ function ProductCheckOut() {
                                 <tr key={index}>
                                 <td>{items.product.name}</td>
                                 <td className='flex align-center justify-center'>
-                                    <img src={items.product?.images[0]?.img} width="50px" alt="" />
+                                    <img src={items.product?.images[0]?.img} width="50px" alt=""/>
                                 </td>
                                 <td>{items.quantity}</td>
                                 <td>${items.amount}</td>
@@ -114,17 +114,17 @@ function ProductCheckOut() {
                                 <label htmlFor="">Phone Number</label>
                                 <input type="tel" name="phone" id="phone"/>
                             </div>
+                            <div>
+                                <label htmlFor="">Address</label>
+                                <input type="text" name="" id="address"/>
+                                <input type="hidden" name="" id="address"/>
+                            </div>
                             <div className='flex flex-wrap gap-2 border-0 outline-none p-3 rounded-xl'>
                                 <select name="currency" id="currency">
                                     <option value="NGN">NGN</option>
                                     <option value="USD">USD</option>
                                 </select>
                                 <h2 className="text-xl font-semibold" name="amount">{calculateTotalAmount().toFixed(2)}</h2>
-                            </div>
-                            <div>
-                                <label htmlFor="">Address</label>
-                                <input type="text" name="" id="address"/>
-                                <input type="hidden" name="" id="address"/>
                             </div>
                             <div>
                                 <button className='product-btn p-2 w-96 text-[#fff] ml-12 rounded capitalize bg-[#502274] hover:bg-[#A42CD6]' type="submit">PAY</button>

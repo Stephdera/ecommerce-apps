@@ -24,6 +24,9 @@ import AdminHeader from './components/pages/admin/AdminHeader';
 import AdminProduct from './components/pages/admin/AdminProduct';
 import Users from './components/pages/admin/Users';
 import Category from './components/pages/admin/Category';
+import Banner1 from '../public/img/handbag green.jpg';
+import Banner2 from '../public/img/airmax.jpg';
+import EmailInput from './components/pages/ResetPassword/EmailInput';
 
 function App() {
   const { getItem } = useLocalStorage("auth-token");
@@ -50,14 +53,14 @@ function App() {
               <Routes>
                 <Route path="/" element={<>
                   <Header/>
-                  <Banner/>
+                  <Banner imageUrl={Banner1} title="Welcome to STAR Stores" title1="Luxury meets Perfection" showButton={true}/>
                   <FeaturedProduct/>
                   <TopSelling/>
                   <Footer/>
                 </>}/>
                 <Route path="/product" element={<>
                   <Header/>
-                  <Banner/>
+                  <Banner imageUrl={Banner2}/>
                   <Product/>
                   <Footer/>
                 </>} />
@@ -93,6 +96,7 @@ function App() {
                 <Route path="/admin-product" element={<AdminProduct/>}/>
                 <Route path="/users" element={<Users/>}/>
                 <Route path="/category" element={<Category/>}/>
+                <Route path="/forgot-password" element={<><EmailInput/></>}/>
               </Routes>
             {/* <Footer/> */}
             </Router>
