@@ -35,8 +35,8 @@ export const EcomProvider = ({ children }) => {
   // })
   const fetchData = async () => {
       try {
-        // const response = await fetch("https://ecommerce-api-ajas.onrender.com/api/product/");
-        const response = await fetch("http://localhost:3000/api/product");
+        const response = await fetch("https://ecommerce-api-ajas.onrender.com/api/product/");
+        // const response = await fetch("http://localhost:3000/api/product");
         const data = await response.json();
         setProduct(data);
       } catch (error) {
